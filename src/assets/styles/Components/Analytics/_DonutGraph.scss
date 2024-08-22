@@ -1,0 +1,82 @@
+@mixin donutGraphPseudoStyle {
+    --a: 0;
+    position: absolute;
+    width: calc(var(--boxSide) * 0.7);
+    height: calc(var(--boxSide) * 0.7);
+    border-radius: inherit;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    animation: p 0.75s ease-in-out calc(var(--a) * 0.5s) 1 forwards;
+}
+
+.donutGraphCard {
+    --tagText: 18px;
+    --normalText: 16px;
+    --boldText: 21px;
+
+    width: 123.8px;
+    height: 173.31px;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+
+    color: black;
+    font-family: 'Inter', sans-serif;
+    text-transform: capitalize;
+    text-align: center;
+
+    h5 {
+        font-size: var(--boldText);
+        line-height: calc(var(--boldText) * 1.2);
+    }
+
+    .donutGraph {
+        --graphFill: 18.92px;
+        --boxSide: 123.8px;
+        --a: 0;
+
+        height: var(--boxSide);
+        width: var(--boxSide);
+
+        border: calc(var(--graphFill) * 0.6) solid rgba(0, 0, 0, 0.2);
+        border-radius: 50%;
+
+        position: relative;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:before {
+            content: ' ';
+
+            @include donutGraphPseudoStyle();
+
+            border: var(--graphFill) solid var(--c);
+
+            --mask: conic-gradient(
+                    white calc(var(--p) * var(--a) * 1%),
+                    transparent 0%
+                )
+                border-box;
+            -webkit-mask: var(--mask);
+            mask: var(--mask);
+        }
+
+        &:after {
+            counter-set: my-counter calc(var(--p) * var(--a));
+            counter-increment: my-counter;
+            content: '' counter(my-counter) '%';
+
+            @include donutGraphPseudoStyle();
+
+            font-size: var(--boldText);
+            line-height: calc(var(--boldText) * 1.2);
+            font-weight: bold;
+        }
+    }
+}
